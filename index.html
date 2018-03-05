@@ -22,20 +22,38 @@ class MapViewer extends HTMLElement {
     let wraper = document.createElement('section')
     let mapDiv = document.createElement('div')
     let mapDiv2 = document.createElement('div')
+    let slider = document.createElement('input')
     let lat = 8.82
     let long = 37.41
     let zoom = 4
     let OSM = false
     wraper.setAttribute('id', 'mapWrapper')
     mapDiv.setAttribute("id", "OSM")
+    
     mapDiv2.setAttribute("id", "GM")
     mapDiv2.setAttribute("class", "map")
     
+    slider.setAttribute('type', 'range')
+    slider.setAttribute('min', '0')
+    slider.setAttribute('max', '1')
+    slider.setAttribute('value', '1')
+    slider.setAttribute('step', '0.1')
+    slider.setAttribute('id', 'rangeBar')
+    slider.style.zIndex = '9999'
+    slider.style.display = 'block'
+    slider.style.width = '90vw'
+    
+    
     wraper.appendChild(mapDiv)
     wraper.appendChild(mapDiv2)
+    shadow.appendChild(slider)
     shadow.appendChild(wraper)
     
-    
+    slider.addEventListener("input", (e)=> {
+      console.log(slider.value)
+      mapDiv2.style.opacity = slider.value
+      
+    })
     if(this.hasAttribute('lat')) {
        lat = parseFloat(this.getAttribute("lat"))
      }
@@ -57,6 +75,9 @@ class MapViewer extends HTMLElement {
   initOpenStreetMap(lat, long, zoom, mapDiv) {
     mapDiv.style.width = '90vw';
     mapDiv.style.height = '90vh';
+    mapDiv.style.opacity = '1';
+    mapDiv.style.position = 'absolute';
+//    mapDiv.style.top = '0';
     var map = new ol.Map({
         target: mapDiv,
         layers: [
@@ -74,6 +95,9 @@ class MapViewer extends HTMLElement {
   initGoogleMap(lat, long, zoom, mapDiv){
     mapDiv.style.width = '90vw';
     mapDiv.style.height = '90vh';
+    mapDiv.style.opacity = '1';
+    mapDiv.style.position = 'absolute';
+//    mapDiv.style.top = '0';
     
     let uluru = {lat: lat, lng: long};
     let map = new google.maps.Map(mapDiv, {
