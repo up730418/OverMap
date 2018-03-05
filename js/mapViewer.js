@@ -35,7 +35,6 @@ class MapViewer extends HTMLElement {
       shadow.appendChild(wraper)
 
       slider.addEventListener("input", (e)=> {
-        console.log(slider.value)
         mapDiv2.style.opacity = slider.value
 
       })
@@ -63,8 +62,8 @@ class MapViewer extends HTMLElement {
     mapDiv.style.height = '90vh';
     mapDiv.style.opacity = '1';
     mapDiv.style.position = 'absolute';
-//    mapDiv.style.top = '0';
-    var map = new ol.Map({
+
+    let map = new ol.Map({
         target: mapDiv,
         layers: [
           new ol.layer.Tile({
@@ -83,7 +82,6 @@ class MapViewer extends HTMLElement {
     mapDiv.style.height = '90vh';
     mapDiv.style.opacity = '1';
     mapDiv.style.position = 'absolute';
-//    mapDiv.style.top = '0';
     
     let uluru = {lat: lat, lng: long};
     let map = new google.maps.Map(mapDiv, {
