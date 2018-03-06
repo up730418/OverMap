@@ -1,8 +1,12 @@
 class MapViewer extends HTMLElement {
+  static get observedAttributes() {return ['lat', 'long', 'zoom']; }
+
   constructor() {
+
     super()
+
     window.addEventListener("load", ()=> {
-      
+
       let shadow = this.attachShadow({mode: 'open'})
       let wraper = document.createElement('section')
       let mapDiv = document.createElement('div')
@@ -12,6 +16,8 @@ class MapViewer extends HTMLElement {
       let long = 37.41
       let zoom = 4
       let OSM = false
+      let gMap
+      let oMap
       wraper.setAttribute('id', 'mapWrapper')
       mapDiv.setAttribute("id", "OSM")
 
@@ -53,17 +59,17 @@ class MapViewer extends HTMLElement {
       if(this.hasAttribute('googleMap') && this.getAttribute('googleMap') === 'true') {
         this.initGoogleMap(lat, long, zoom, mapDiv2)
       }
-    
+
     })
   }
-  
+
   initOpenStreetMap(lat, long, zoom, mapDiv) {
     mapDiv.style.width = '90vw';
     mapDiv.style.height = '90vh';
     mapDiv.style.opacity = '1';
     mapDiv.style.position = 'absolute';
 
-    let map = new ol.Map({
+    this.oMap = new ol.Map({
         target: mapDiv,
         layers: [
           new ol.layer.Tile({
@@ -76,23 +82,49 @@ class MapViewer extends HTMLElement {
         })
       });
   }
-  
+
   initGoogleMap(lat, long, zoom, mapDiv){
     mapDiv.style.width = '90vw';
     mapDiv.style.height = '90vh';
     mapDiv.style.opacity = '1';
     mapDiv.style.position = 'absolute';
-    
+
     let uluru = {lat: lat, lng: long};
-    let map = new google.maps.Map(mapDiv, {
+    this.gMap = new google.maps.Map(mapDiv, {
       zoom: zoom,
       center: uluru
     });
-    let marker = new google.maps.Marker({
-      position: uluru,
-      map: map
-    });
-    
+    // let marker = new google.maps.Marker({
+    //   position: uluru,
+    //   map: map
+    // });
+
+  }
+  setZoomValue(value){
+    console.log("zoom");
+  }
+  setLatValue(value){
+    console.log("lat");
+
+  }
+  setLongValue(value){
+    console.log("long");
+
+  }
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case 'zoom':
+        this.setZoomValue(newValue)
+        break;
+      case 'lat':
+        this.setLatValue(newValue)
+        break;
+      case 'zoom':
+        this.setLongValue(newValue)
+        break;
+      default:
+
+    }
   }
 }
 
