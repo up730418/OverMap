@@ -15,6 +15,8 @@ class MapViewer extends HTMLElement {
             let wraper = document.createElement('section')
             let mapDiv = document.createElement('div')
             let mapDiv2 = document.createElement('div')
+            let sliderLabel = document.createElement('h2')
+            let sliderLabelText = document.createTextNode('Map Layer Visibility')
             let slider = document.createElement('input')
             let lat = 8.82
             let long = 37.41
@@ -38,9 +40,11 @@ class MapViewer extends HTMLElement {
             slider.style.display = 'block'
             slider.style.width = '40vw'
 
+            sliderLabel.appendChild(sliderLabelText)
 
             wraper.appendChild(mapDiv)
             wraper.appendChild(mapDiv2)
+            shadow.appendChild(sliderLabel)
             shadow.appendChild(slider)
             shadow.appendChild(wraper)
 
